@@ -1,0 +1,27 @@
+# Setup
+
+git clone git@github.com:rwdaigle/tweetstream.git
+bundle install
+
+# Create & configure
+
+heroku create ryan-tweetstream --stack cedar
+heroku config:add TWITTER_USERNAME=herokutesting TWITTER_PASSWORD=heroku TWITTER_KEYWORD=ruby
+heroku addons:add pusher:test redistogo:small
+git push heroku master
+
+# Run/scale
+
+heroku scale web=1 stream=1 clock=1
+
+# Introspect
+
+watch heroku ps
+heroku releases
+heroku logs --tail -s app
+
+# Manage
+
+heroku config:add TWITTER_KEYWORD=node
+heroku run bundle exec rake tweetstream:queue:clear
+heroku run bash
