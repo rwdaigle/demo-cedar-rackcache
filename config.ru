@@ -13,7 +13,7 @@ class RackCacheDemoApp < Sinatra::Base
     :entitystore => "memcached://#{ENV['MEMCACHE_SERVERS']}"
 
   get "/" do
-    cache_control :public, :max_age => 15
+    cache_control :public, :max_age => 5
     "Cached at #{Time.now.to_s}"
   end
 end
