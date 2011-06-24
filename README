@@ -1,0 +1,13 @@
+# Local deployment (assumes memcache is running)
+
+git clone git://github.com/rwdaigle/demo-cedar-rackcache.git
+cd demo-cedar-rackcache
+bundle install
+foreman start
+
+# Heroku deployment
+
+heroku create --stack cedar
+heroku addons:add memcache:5mb
+git push heroku master
+heroku open
