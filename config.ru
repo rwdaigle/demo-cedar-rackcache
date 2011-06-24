@@ -1,18 +1,16 @@
 require "rubygems"
 require "bundler"
 require 'sinatra/base'
-require 'memcached'
+require 'dalli'
 require 'rack/cache'
 Bundler.setup
 
 class RackCacheDemoApp < Sinatra::Base
 
-  $cache = Memcached.new
-
   use Rack::Cache,
     :verbose => true,
-    :metastore => $cache,
-    :entitystore => $cache
+    :metastore => "memcached://#{ENV['MEMCACHE_SERVERS']}",
+    :entitystore => "memcached://#{ENV['MEMCACHE_SERVERS']}"
 
   get "/" do
     cache_control :public, :max_age => 15
